@@ -25,10 +25,10 @@ Create the API access keys by selecting the Integrations icon and selecting Clie
 
 Copy following Client API and Secret keys as well as your ICDM Customer and Domain ID information and add them to the ICDm configuration file. (ICDM.conf for Python and App.Config for Windows C#)
 
-Client ID: O***#####################y988
-Client Secret Key: t##################################
-Customer ID: SEJ*#########################7788
-Domain ID: Dq*####################6Yh
+    Client ID: [copy from integrations page]
+    Client Secret Key: [copy from integrations page]
+    Customer ID: [copy from integrations page]
+    Domain ID: [copy from integrations page]
 
 Once this is complete, you are ready to start using these samples.
 
