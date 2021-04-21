@@ -1,6 +1,4 @@
-API code samples for demonstrating usage of Symantec ICDm RESTful API functions
-
-Symantec ICDm API Samples for Python and Windows C#
+# API code samples for demonstrating Symantec ICDm RESTful API
 
 Refer to Symantec ICDm API documentation at: https://apidocs.securitycloud.symantec.com 
 
@@ -33,9 +31,9 @@ Copy following Client API and Secret keys as well as your ICDM Customer and Doma
 Once this is complete, you are ready to start using these samples.
 
 
-Requirements
+### Requirements
 
-Python
+#### Python
 * Python 3.x
 * Python ‘Requests’ library
 
@@ -44,5 +42,5 @@ If you do not have the Python Requests library installed, perform the following;
 1. python get-pip.py (or python3 get-pip.py)
 1. pip3 install requests
 
-Windows C#
+#### Windows C#
 * .NET 4.5 Runtime
