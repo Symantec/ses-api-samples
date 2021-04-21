@@ -6,8 +6,8 @@ There are currently two branches containing the ICDM API samples located on GitH
 
 * main
   * icdm
-    * [Python](Python)
-    * [C-Sharp](C-Sharp)
+    * [Python](../Python)
+    * [C-Sharp](../C-Sharp)
 
 Both projects utilize a centralized ICDMController class to handle the oAuth authentication, REST API formatting and submission of the API query. The ICDMController class reads the authentication credentials from a configuration file located within each project (ICDM.conf for Python and App.Config for Windows C#). 
 
