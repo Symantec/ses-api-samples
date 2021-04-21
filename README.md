@@ -6,10 +6,10 @@ Refer to Symantec ICDm API documentation at: https://apidocs.securitycloud.syman
 
 There are currently two branches containing the ICDM API samples located on GitHub. One branch contains Python API samples and the other is a Windows C# project;
 
-main
-    I ---- icdm
-	    I ---- Python
-	    I ---- C-Sharp
+* main
+  * icdm
+    * Python
+    * C-Sharp
 
 Both projects utilize a centralized ICDMController class to handle the oAuth authentication, REST API formatting and submission of the API query. The ICDMController class reads the authentication credentials from a configuration file located within each project (ICDM.conf for Python and App.Config for Windows C#). 
 
@@ -36,17 +36,13 @@ Once this is complete, you are ready to start using these samples.
 Requirements
 
 Python
-
-	Python 3.x
-	Python ‘Requests’ library
+* Python 3.x
+* Python ‘Requests’ library
 
 If you do not have the Python Requests library installed, perform the following;
-
-•	curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-•	python get-pip.py (or python3 get-pip.py)
-•	pip3 install requests
+1. curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+1. python get-pip.py (or python3 get-pip.py)
+1. pip3 install requests
 
 Windows C#
-
-.NET 4.5 Runtime 
-![image](https://user-images.githubusercontent.com/77645150/115570614-4283ff00-a28c-11eb-892f-c269944e0a37.png)
+* .NET 4.5 Runtime
