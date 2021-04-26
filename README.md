@@ -2,12 +2,12 @@
 
 Refer to Symantec ICDm API documentation at: https://apidocs.securitycloud.symantec.com 
 
-There are currently two branches containing the ICDM API samples located on GitHub. One branch contains Python API samples and the other is a Windows C# project;
+There are currently two directories containing the ICDM API samples located on GitHub. One directory contains Python API samples and the other is a Windows C# project;
 
 * main
   * icdm
-    * Python
-    * C-Sharp
+    * python
+    * c-sharp
 
 Both projects utilize a centralized ICDMController class to handle the oAuth authentication, REST API formatting and submission of the API query. The ICDMController class reads the authentication credentials from a configuration file located within each project (ICDM.conf for Python and App.Config for Windows C#). 
 
