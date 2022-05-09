@@ -4,7 +4,7 @@
 *                                                                                                      *
 *******************************************************************************************************/
 """
-from ICDMConfig import ICDMConfig
+from SEPMConfig import SEPMConfig
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import os
@@ -25,59 +25,48 @@ else:
     # Handle target environment that doesn't support HTTPS verification
     ssl._create_default_https_context = _create_unverified_https_context
 
-class ICDMConnector:
+class SEPMConnector:
     def __init__(self):
 
-        c = ICDMConfig()
+        c = SEPMConfig()
 
-        self.clientId = c.clientId
-        self.clientSecret = c.clientSecret
+        self.username = c.username
+        self.password = c.password
+        self.domain = c.domain
         self.apihost = c.apihost
-        self.customerId = c.customerId
-        self.domainId = c.domainId
 
-        tokenUrl = "https://" + self.apihost + "/v1/oauth2/tokens"
-        post = []
+        tokenUrl = "https://" + self.apihost + "/sepm/api/v1/identity/authenticate"
+        post = json.dumps({"username": self.username, "password":  self.password, "domain": self.domain})
         files = []
 
         self.s = requests.Session()
-        e = (self.clientId + ':' + self.clientSecret)
-        en = e.encode('utf-8')
-        en64 = base64.urlsafe_b64encode(en)
         self.s.headers.update({ 'Accept': 'application/json' })
-        self.s.headers.update({ 'Authorization': 'Basic ' + str(en64.decode()) })
-        self.s.headers.update({ 'Content-Type': 'application/x-www-form-urlencoded' })
-        self.s.headers.update({ 'Host': self.apihost })
-        # print("Encoded Auth: " + str(en64.decode()))
+        self.s.headers.update({ 'Content-Type': 'application/json' })
 
-        f = self.s.post(tokenUrl, data=post, files=files, verify=False)
+        f = self.s.post(tokenUrl, data=post, json=post, verify=False)
 
-        # print('Response: ' + f.text)
+        #print('Response: ' + f.text)
         r = json.loads(f.text)
-        self.accessToken = r['access_token']
+        self.accessToken = r['token']
 
-    def callAPI(self, method, url, data, download = False):
+    def callAPI(self, method, url, data, download=False):
 
         s2 = requests.Session()
         self.s = s2
 
-        # print("clientId: " + self.clientId)
-        # print("clientSecret: " + self.clientSecret)
-        # print("apihost: " + self.apihost)
-        # print("accessToken: " + self.accessToken)
-        # print("customerId: " + self.customerId)
-        # print("domainId: " + self.domainId)
+        #print("username: " + self.username)
+        #print("password: " + self.password)
+        #print("apihost: " + self.apihost)
+        #print("accessToken: " + self.accessToken)
+        #print("domain: " + self.domain)
 
         if url[0:1] == '/':
             url = url[1:]
 
         baseUrl = "https://" + self.apihost + "/" + url
-        self.s.headers.update({ 'Accept': 'application/json' })
-        self.s.headers.update({ 'Content-Type': 'application/json;charset=UTF-8' })
-        self.s.headers.update({ 'Accept-Encoding': '*' })
+        #self.s.headers.update({ 'Accept': 'application/json' })
+        self.s.headers.update({ 'Content-Type': 'application/json' })
         self.s.headers.update({ 'Authorization': 'Bearer ' + self.accessToken })
-        self.s.headers.update({ 'x-epmp-customer-id':  self.customerId })
-        self.s.headers.update({ 'x-epmp-domain-id':  self.domainId })
 
         return self._request(method, baseUrl, data, download)
 
@@ -93,22 +82,22 @@ class ICDMConnector:
             #        files[k] = open(v, "rb")
             #    else:
             #        post[k] = json.dumps(v)
-            #if ((method == "POST") or (method == "PUT")):
-            # f = self.s.post(url, data=data, files=files, allow_redirects=True)
-            #f = self.s.post(url, data=data, allow_redirects=True)
+            #if method == "POST":
+                # f = self.s.post(url, data=data, files=files, allow_redirects=True)
+                #f = self.s.post(url, data=data, verify=False)
         #else:
             # print("Sending GET Request for " + url)
-            #f = self.s.get(url, allow_redirects=True)
+            #f = self.s.get(url, verify=False)
 
         req = requests.Request(method,  url, data=data)
         prepped = self.s.prepare_request(req)
-        f = self.s.send(prepped, allow_redirects=True)
-        
+        f = self.s.send(prepped, verify=False)
+
         #If download download to correct area
         if download != False:
             if download == 'memory':
                 #return f
-                return json.loads(f.text)
+                return f.text
             else:
                 chunk_size = 1000
                 dfile = open(download, 'wb')
@@ -117,24 +106,21 @@ class ICDMConnector:
                   filesize = os.path.getsize(download)
                 return {'download_file':download, 'filesize':filesize}
         else: #Else return the data
-            resp = json.loads(f.text)
+            resp = f.text
             if len(resp) > 0:
-               return resp
+               return json.loads(resp)
             else:
                # print(self.s.headers)
                # print(f.status_code)
-               return resp
+               return f.text               
 
     def enumList(self, d):
        for key,value in d.items():
-           #print(value + " - " + type(value))
            if type(value) == type(dict()):
               self.enumList(value)
            elif type(value) == type(list()):
               for val in value:
                  if type(val) == type(str()):
-                    pass
-                 if type(val) == type(int()):
                     pass
                  elif type(val) == type(list()):
                     pass
@@ -143,23 +129,3 @@ class ICDMConnector:
            else:
               print (str(key)+': '+str(value))
 
-    def enumList2(self, d):
-       count=0
-       for key,value in d.items():
-         if type(value) == type(dict()):
-            self.enumList2(value)
-         elif type(value) == type(list()):
-            for val in value:
-               #print(val)
-               #print(type(val))
-               if type(val) == type(dict()):
-                 self.enumList2(val)
-               elif type(val) == type(str()):
-                 #print(type(key))
-                 #print(key)
-                 #if count==0:
-                 print(value)
-                 #count=count+1
-                 #pass
-         else:
-            print(str(key) + ': ' + str(value))
