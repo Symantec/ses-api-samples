@@ -38,10 +38,10 @@ SEPM API Instructions
 
 Open the SEPM.conf file and edit the following values;
 
-username={SEPM_USERNAME}
-password={SEPM_USER_PASSWORD}
-domain=Default
-apihost={SEPM_IP_ADDRESS}:8446
+    username={SEPM_USERNAME}
+    password={SEPM_USER_PASSWORD}
+    domain=Default
+    apihost={SEPM_IP_ADDRESS}:8446
 
 Once the configuration file is saved, ensure that you have the necessary requirements installed (below) and you are ready to start using these samples.
 
