@@ -1,19 +1,23 @@
-# API code samples for demonstrating Symantec ICDm RESTful API
+# API code samples for demonstrating Symantec ICDm and SEPM RESTful API calls
 
-Refer to Symantec ICDm API documentation at: https://apidocs.securitycloud.symantec.com 
+Refer to Symantec ICDm and SEP API documentation at: https://apidocs.securitycloud.symantec.com 
 
-There are currently two directories containing the ICDM API samples located on GitHub. One directory contains Python API samples and the other is a Windows C# project;
+There are currently two directories containing the ICDM API samples located on GitHub. One directory contains Python API samples and the other is a Windows C# project. 
+There is also a 'sepm' directory containing SEPM on-prem API examples. 
 
 * main
   * icdm
     * python
     * c-sharp
+  * sepm
 
-Both projects utilize a centralized ICDMController class to handle the oAuth authentication, REST API formatting and submission of the API query. The ICDMController class reads the authentication credentials from a configuration file located within each project (ICDM.conf for Python and App.Config for Windows C#). 
+All projects utilize a centralized Controller class to handle the oAuth authentication, REST API formatting and submission of the API query. The Controller class reads the authentication credentials from a configuration file located within each project (ICDM.conf for ICDm Python API examples, App.Config for Windows C# ICDm API examples and SEPM.conf for SEPM API examples). 
 
 NOTE: The configuration file should be used to store API credentials for testing, training or demonstration purposes ONLY. Production deployments of these samples should be modified to utilize the secure credential storage facilities running within your organization.    
 
-Before you get started you need to enroll the Symantec ICDM console by logging into; 
+ICDm API Instructions 
+----------------------
+Before you get started, you need to enroll the Symantec ICDm console by logging into; 
 
 https://sep.securitycloud.symantec.com
 
@@ -28,10 +32,20 @@ Copy following Client API and Secret keys as well as your ICDM Customer and Doma
     Customer ID: [copy from integrations page]
     Domain ID: [copy from integrations page]
 
-Once this is complete, you are ready to start using these samples.
 
+SEPM API Instructions
+---------------------
 
-### Requirements
+Open the SEPM.conf file and edit the following values;
+
+username={SEPM_USERNAME}
+password={SEPM_USER_PASSWORD}
+domain=Default
+apihost={SEPM_IP_ADDRESS}:8446
+
+Once the configuration file is saved, ensure that you have the necessary requirements installed (below) and you are ready to start using these samples.
+
+### Requirements for these API examples
 
 #### Python
 * Python 3.x
@@ -39,7 +53,7 @@ Once this is complete, you are ready to start using these samples.
 
 If you do not have the Python Requests library installed, perform the following;
 1. curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-1. python get-pip.py (or python3 get-pip.py)
+1. python3 get-pip.py 
 1. pip3 install requests
 
 #### Windows C#
