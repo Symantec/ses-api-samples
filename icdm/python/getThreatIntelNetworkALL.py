@@ -6,8 +6,8 @@ import json, sys
 s = ICDMConnector()
 
 def getInput():
-   sha256 = input("Enter the Network Address or a comma separated list of IPs: ") 
-   if (len(Ips) == 0):
+   IPs = input("Enter the Network Address or a comma separated list of IPs: ") 
+   if (len(IPs) == 0):
       print("Network Address cannot be empty..")
       getInput()
    else:
@@ -28,8 +28,24 @@ def runQuery(IPs):
          print(str(resp["message"]))
       else:
          s.enumList(resp)
+         #print(resp)
    else:
       print("Empty Result..")
+
+   url = "/v1/threat-intel/insight/network/history/" + IPs   
+   m = "GET"   
+   data = ""   
+
+   resp = s.callAPI(m,url,data)   
+   if (len(resp) > 0):      
+      if "message" in resp:         
+         print(str(resp["message"]))      
+      else:         
+         s.enumList(resp)
+         #print(resp)   
+   else:      
+      print("Empty Result..")
+
 
    print("-------- NETWORK PROTECTION ---------")
    url = "/v1/threat-intel/protection/network/" + IPs

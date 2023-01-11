@@ -6,8 +6,8 @@ import json, sys
 s = ICDMConnector()
 
 def getInput():
-   sha256 = input("Enter the Network Address or a comma separated list of IPs: ") 
-   if (len(Ips) == 0):
+   IPs = input("Enter the Network Address or a comma separated list of IPs: ") 
+   if (len(IPs) == 0):
       print("Network Address cannot be empty..")
       getInput()
    else:
