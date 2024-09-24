@@ -123,43 +123,30 @@ class ICDMConnector:
             else:
                # print(self.s.headers)
                # print(f.status_code)
-               return resp
+               return json.loads('{"result": "none" }')
 
+### Enumerate JSON Response Object
     def enumList(self, d):
-       for key,value in d.items():
-           #print(value + " - " + type(value))
-           if type(value) == type(dict()):
-              self.enumList(value)
-           elif type(value) == type(list()):
-              for val in value:
-                 if type(val) == type(str()):
-                    pass
-                 if type(val) == type(int()):
-                    pass
-                 elif type(val) == type(list()):
-                    pass
-                 else:
-                    self.enumList(val)
-           else:
-              print (str(key)+': '+str(value))
+       #if (type(d) == type(str())):
+       #   dd = json.loads(d)
+        if type(d) == type(dict()):
+            for key,value in d.items():
+                #print(str(value) + " - "  + str(type(value)))
+                if type(value) == type(dict()):
+                    self.enumList(value)
+                elif type(value) == type(list()):
+                    for val in value:
+                        if type(val) == type(str()):
+                            print(str(val))
+                        if type(val) == type(int()):
+                            print(str(val))
+                        elif type(val) == type(list()):
+                            print(str(val))
+                        else:
+                            self.enumList(val)
+                else:
+                    print (str(key)+': '+str(value))
+        elif type(d) == type(list()):
+            for val in d:
+                print(str(val))
 
-    def enumList2(self, d):
-       count=0
-       for key,value in d.items():
-         if type(value) == type(dict()):
-            self.enumList2(value)
-         elif type(value) == type(list()):
-            for val in value:
-               #print(val)
-               #print(type(val))
-               if type(val) == type(dict()):
-                 self.enumList2(val)
-               elif type(val) == type(str()):
-                 #print(type(key))
-                 #print(key)
-                 #if count==0:
-                 print(value)
-                 #count=count+1
-                 #pass
-         else:
-            print(str(key) + ': ' + str(value))

@@ -21,13 +21,14 @@ def runQuery(group_id):
    resp = s.callAPI(m,url,data)
 
    if (len(resp) > 0):
-      print("Raw: " + str(resp))
+      #print("Raw: " + str(resp))
       print("----")
       print("ID: " + str(resp["id"]))
       print("Name: " + str(resp["name"]))
       if str(resp["name"]) != "Default":
          print("Parent ID: " + str(resp["parent_id"]))
-         print("Description: " + str(resp["description"]))
+         if ("description") in str(resp):
+            print("Description: " + str(resp["description"]))
       print("Created: " + str(resp["created"]))
       print("Modified: " + str(resp["modified"]))
    else:
