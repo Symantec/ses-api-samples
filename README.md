@@ -1,6 +1,6 @@
 # API code samples for demonstrating Symantec ICDm and SEPM RESTful API calls
 
-Refer to Symantec ICDm and SEP API documentation at: https://apidocs.securitycloud.symantec.com 
+Refer to Symantec ICDm and SEP API documentation at: https://apidocs.cloud.security.com/#/ 
 
 There are currently two directories containing the ICDM API samples located on GitHub. One directory contains Python API samples and the other is a Windows C# project. 
 There is also a 'sepm' directory containing SEPM on-prem API examples. 
